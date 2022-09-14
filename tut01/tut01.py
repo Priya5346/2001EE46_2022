@@ -45,3 +45,7 @@ for i in range(n):
 
 print(octants)
 print(octant_count)
+
+df['octant'] = octants
+
+df.to_csv('output_file.csv')
