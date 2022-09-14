@@ -31,3 +31,17 @@ def find_octant(x, y, z):
         octant = -4
     return octant
 
+n = len(df)
+
+octants = []
+octant_count = {1:0, -1:0, 2:0, -2:0, 3:0, -3:0, 4:0, -4:0}
+for i in range(n):
+    x = df.loc[i, "U-Uavg"]
+    y = df.loc[i, "V-Vavg"]
+    z = df.loc[i, "W-Wavg"]
+    octants.append(find_octant(x, y, z))
+    octant_count[find_octant(x, y, z)] = octant_count[find_octant(x, y, z)]+1
+    
+
+print(octants)
+print(octant_count)
