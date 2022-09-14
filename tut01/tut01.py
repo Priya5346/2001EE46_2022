@@ -1,8 +1,9 @@
-def factorial(x):
-    fact=1
-    for i in range (1 , x+1):
-        fact = fact*i
-    return fact
 
-x=int(input("Enter the number whose factorial is to be found: "))
-print (factorial(x))
+import pandas as pd
+import numpy as np
+
+df=pd.read_csv(r'C:\Users\PRIYA RAJ\OneDrive\Documents\GitHub\2001EE46_2022\tut01\octant_input.csv')
+print(df)
+
+
+
