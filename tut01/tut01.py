@@ -12,4 +12,22 @@ df['U-Uavg'] = df['U'] - df['Uavg']
 df['V-Vavg'] = df['V'] - df['Vavg']
 df['W-Wavg'] = df['W'] - df['Wavg']
 
+def find_octant(x, y, z):
+    if x>0 and y>0 and z>0:
+        octant = 1
+    if x>0 and y>0 and z<0:
+        octant = -1
+    if x<0 and y>0 and z>0:
+        octant = 2
+    if x<0 and y>0 and z<0:
+        octant = -2
+    if x<0 and y<0 and z>0:
+        octant = 3
+    if x<0 and y<0 and z<0:
+        octant = -3
+    if x>0 and y<0 and z>0:
+        octant = 4
+    if x>0 and y<0 and z<0:
+        octant = -4
+    return octant
 
