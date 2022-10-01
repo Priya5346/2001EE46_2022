@@ -1,12 +1,12 @@
 
 import pandas as pd
 import numpy as np
-
+# reading file
 df = pd.read_csv('C:/Users/PRIYA RAJ/OneDrive/Documents/GitHub/CS384_2022/tut01/octant_input.csv')
 print(df)
 
-##############
 
+# calculating mean
 df['Uavg'] = df['U'].mean()
 df['Vavg'] = df['V'].mean()
 df['Wavg'] = df['W'].mean()
@@ -15,8 +15,7 @@ df['V-Vavg'] = df['V'] - df['Vavg']
 df['W-Wavg'] = df['W'] - df['Wavg']
 print(df)
 
-##################
-
+# finding octant
 def identify_octant(x, y, z):
     if(x>0 and y>0 and z>0):
         octant = 1
@@ -38,8 +37,8 @@ def identify_octant(x, y, z):
 
 n = len(df)
 
-####################
 
+# finding octant values
 def octant_identification_count(df):
     octants = []
     octant_count = {1:0, -1:0, 2:0, -2:0, 3:0, -3:0, 4:0, -4:0}
@@ -59,8 +58,8 @@ octants_overall = octant_identification_count(df)[0]
 df['Octants'] = octants_overall
 print(df)
 
-######################
 
+# finding mod octant count
 def split_count(mod):
     df['Octant ID'] = ''
     df['Octant ID'][0] = 'Overall Count'
@@ -90,5 +89,5 @@ print(df)
 # mod = int(input("Write the value of mod: "))
 mod = 5000
 split_count(mod)
-
+# converting to csv file
 df.to_csv("my_output.csv")
