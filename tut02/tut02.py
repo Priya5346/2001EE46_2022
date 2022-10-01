@@ -52,4 +52,67 @@ def octant_identification_count(df):
 
 octants_overall = octant_identification_count(df)[0]
 df['Octants'] = octants_overall
+
+mod = 5000
+def split_count(mod):
+    df['Octant ID'] = ''
+    df['Octant ID'][0] = 'Overall Count'
+    df['Octant ID'][2] = '0 - ' + str(mod-1)
+    no_of_ranges = int(30000/mod)
+    for i in range (no_of_ranges-1):
+        df['Octant ID'][i+3] = str((i+1)*mod) +' - '+ str((i+2)*mod-1)
+
+    possible_octant_values = [1, -1, 2, -2, 3, -3, 4, -4]
+
+    # adding overall octant count
+    for i in possible_octant_values:
+        df[str(i)] = ''
+    for i in possible_octant_values:
+        df[str(i)][0] = df['Octants'].value_counts()[i]
+
+    # adding mod octant count
+    c = 0
+    while(c<30000):
+        #creating ranges using the mod value
+        for i in range (no_of_ranges):
+            #storing count of diff octant values
+            #[c:c+mod] gives the ranges for the column 'Octant', example- 0:4999
+            for j in possible_octant_values:
+                df[str(j)][i+2] = df['Octants'][c:c+mod].value_counts()[j]
+            c = c + mod
+
+    # verifying the mod octant count
+    df['Octant ID'][no_of_ranges+2] = 'Verified'
+    
+    for i in possible_octant_values:
+        df[str(i)][no_of_ranges+2] = sum(df[str(i)][2:2+no_of_ranges])
+
+    row_number = no_of_ranges+4
+
+    df['Octant ID'][row_number] = 'Overall transition count'
+    row_number = row_number+1
+
+    for i in possible_octant_values:
+        df[str(i)][row_number] = i
+
+    df['Octant ID'][row_number] = 'count'
+
+    # overall transition count
+    octant_index = {1:0, -1:1, 2:2, -2:3, 3:4, -3:5, 4:6, -4:7}
+    transition_count_matrix = np.zeros((8, 8), int)
+    for i in range(n-1):
+        x = octant_index[octants_overall[i]]
+        y = octant_index[octants_overall[i+1]]
+        transition_count_matrix[x][y] = transition_count_matrix[x][y] + 1
+
+    row_number = row_number+1
+
+    for i in possible_octant_values:
+        for j in possible_octant_values:
+            df[str(j)][row_number + octant_index[i]] = transition_count_matrix[octant_index[i]][octant_index[j]]
+
+    for i in possible_octant_values:
+        df['Octant ID'][row_number + octant_index[i]] = i
+
+split_count(mod)
 print(df)
