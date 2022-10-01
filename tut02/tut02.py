@@ -130,7 +130,7 @@ def split_count(mod):
 
             transition_count_matrix = np.zeros((8, 8), int)
             temp = df['Octants'][c:c+mod]
-            print(temp)
+            # print(temp)
             for j in range(len(temp)-1):
                 x = octant_index[temp[c+j]]
                 y = octant_index[temp[c+j+1]]
@@ -150,4 +150,5 @@ def split_count(mod):
 
 
 split_count(mod)
-print(df)
+df.to_excel('my_output.xlsx')
+
