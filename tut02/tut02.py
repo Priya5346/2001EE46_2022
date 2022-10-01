@@ -114,5 +114,40 @@ def split_count(mod):
     for i in possible_octant_values:
         df['Octant ID'][row_number + octant_index[i]] = i
 
+    row_number = row_number+8
+    c=0
+
+    #finding mod transition count
+    while(c<30000):
+        
+        for i in range(no_of_ranges):
+            df['Octant ID'][row_number+1] = 'mod transition count'
+            df['Octant ID'][row_number+2] = df['Octant ID'][i+2]
+            df['Octant ID'][row_number+3] = 'count'
+
+            for j in possible_octant_values:
+                df[str(j)][row_number+3] = j
+
+            transition_count_matrix = np.zeros((8, 8), int)
+            temp = df['Octants'][c:c+mod]
+            print(temp)
+            for j in range(len(temp)-1):
+                x = octant_index[temp[c+j]]
+                y = octant_index[temp[c+j+1]]
+                transition_count_matrix[x][y] = transition_count_matrix[x][y] + 1
+
+            row_number = row_number + 4
+                
+            for i1 in possible_octant_values:
+                for j in possible_octant_values:
+                    df[str(j)][row_number + octant_index[i1]] = transition_count_matrix[octant_index[i1]][octant_index[j]]
+
+            for j in possible_octant_values:
+                df['Octant ID'][row_number + octant_index[j]] = j
+
+            c = c+mod
+            row_number = row_number + 8
+
+
 split_count(mod)
 print(df)
