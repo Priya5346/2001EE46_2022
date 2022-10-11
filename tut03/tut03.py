@@ -80,4 +80,16 @@ for i in range(n):
     if count==max:
         len_count_matrix[octant_index[df['Octants'][i]]][1] = len_count_matrix[octant_index[df['Octants'][i]]][1] + 1
         
-print(len_count_matrix)
+# adding length of longest subsequence and its count to the dataframe
+df['Octant ID'] = ''
+df['Longest Subsequence Length'] = ''
+df['Count'] = ''
+
+possible_octant_values = [1, -1, 2, -2, 3, -3, 4, -4]
+
+for i in range(8):
+    df['Octant ID'][i] = possible_octant_values[i]
+    df['Longest Subsequence Length'][i] = len_count_matrix[i][0]
+    df['Count'][i] = len_count_matrix[i][1]
+
+print(df)
