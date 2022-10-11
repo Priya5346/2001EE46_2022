@@ -83,5 +83,15 @@ for i in range(n):
         # storing the time range for each longest subsequence
         from_to[octant_index[df['Octants'][i]]].append((df['Time'][i],df['Time'][i-max+1]))
 
-print(len_count_matrix)
-print(from_to)
+# adding length of longest subsequence and its count to the dataframe
+df['Octant ID'] = ''
+df['Longest Subsequence Length'] = ''
+df['Count'] = ''
+
+possible_octant_values = [1, -1, 2, -2, 3, -3, 4, -4]
+
+for i in range(8):
+    df['Octant ID'][i] = possible_octant_values[i]
+    df['Longest Subsequence Length'][i] = len_count_matrix[i][0]
+    df['Count'][i] = len_count_matrix[i][1]
+print(df)
