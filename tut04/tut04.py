@@ -54,4 +54,34 @@ def octant_identification_count(df):
 
 octants_overall = octant_identification_count(df)[0]
 df['Octants'] = octants_overall
-print(df)
+
+# matrix to store maximum subsequence length and its count
+len_count_matrix = np.zeros((8, 2), int)
+from_to = ([],[],[],[],[],[],[],[])
+
+# finding the maximum length of longest subsequence count for each octant
+for i in range(n):
+    octant_index = {1:0, -1:1, 2:2, -2:3, 3:4, -3:5, 4:6, -4:7}
+    count = 1
+    max = len_count_matrix[octant_index[df['Octants'][i]]][0]
+    while i<n-1 and df['Octants'][i]==df['Octants'][i+1]:
+        count = count + 1
+        i = i + 1
+    if count>max:
+        len_count_matrix[octant_index[df['Octants'][i]]][0] = count
+
+# finding the count of longest subsequences
+for i in range(n):
+    octant_index = {1:0, -1:1, 2:2, -2:3, 3:4, -3:5, 4:6, -4:7}
+    count = 1
+    max = len_count_matrix[octant_index[df['Octants'][i]]][0]
+    while i<n-1 and df['Octants'][i]==df['Octants'][i+1]:
+        count = count + 1
+        i = i + 1
+    if count==max:
+        len_count_matrix[octant_index[df['Octants'][i]]][1] = len_count_matrix[octant_index[df['Octants'][i]]][1] + 1
+        # storing the time range for each longest subsequence
+        from_to[octant_index[df['Octants'][i]]].append((df['Time'][i],df['Time'][i-max+1]))
+
+print(len_count_matrix)
+print(from_to)
