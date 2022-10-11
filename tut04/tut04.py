@@ -94,4 +94,25 @@ for i in range(8):
     df['Octant ID'][i] = possible_octant_values[i]
     df['Longest Subsequence Length'][i] = len_count_matrix[i][0]
     df['Count'][i] = len_count_matrix[i][1]
+
+# adding length of longest subsequence, its count and time range to the dataframe
+df['Octant_ID'] = ''
+df['Longest_Subsequence_Length'] = ''
+df['Count_of_Longest_Subsequnces'] = ''
+
+row_number = 0
+
+for i in range(8):
+    df['Octant_ID'][row_number] = possible_octant_values[i]
+    df['Longest_Subsequence_Length'][row_number] = len_count_matrix[i][0]
+    df['Count_of_Longest_Subsequnces'][row_number] = len_count_matrix[i][1]
+    row_number = row_number+1
+    df['Octant_ID'][row_number] = 'Time'
+    df['Longest_Subsequence_Length'][row_number] = 'From'
+    df['Count_of_Longest_Subsequnces'][row_number] = 'To'
+    row_number = row_number+1
+    for j in range(len(from_to[i])):
+        df['Longest_Subsequence_Length'][row_number] = from_to[i][j][0]
+        df['Count_of_Longest_Subsequnces'][row_number] = from_to[i][j][1]
+        row_number = row_number+1
 print(df)
