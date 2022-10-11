@@ -115,4 +115,5 @@ for i in range(8):
         df['Longest_Subsequence_Length'][row_number] = from_to[i][j][0]
         df['Count_of_Longest_Subsequnces'][row_number] = from_to[i][j][1]
         row_number = row_number+1
-print(df)
+# updating output file
+df.to_excel('my_output.xlsx')
