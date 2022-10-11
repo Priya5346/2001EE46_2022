@@ -92,4 +92,4 @@ for i in range(8):
     df['Longest Subsequence Length'][i] = len_count_matrix[i][0]
     df['Count'][i] = len_count_matrix[i][1]
 
-print(df)
+df.to_excel('my_output.xlsx')
