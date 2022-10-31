@@ -36,4 +36,20 @@ def identify_octant(x, y, z):
     return octant
 
 n = len(df)
-print("length is:", n)
+
+def octant_identification_count(df):
+    octants = []
+    octant_count = {1:0, -1:0, 2:0, -2:0, 3:0, -3:0, 4:0, -4:0}
+    for i in (-1, 1, 2, -2, 3, -3, 4, -4):
+        octant_count[i] = 0
+    for i in range(n):
+        x = df.loc[i, "U-Uavg"]
+        y = df.loc[i, "V-Vavg"]
+        z = df.loc[i, "W-Wavg"]
+        octants.append(identify_octant(x, y, z))
+        octant_count[identify_octant(x, y, z)] = octant_count[identify_octant(x, y, z)]+1
+    return (octants, octant_count)
+
+octants_overall = octant_identification_count(df)[0]
+df['Octants'] = octants_overall
+print(df)
