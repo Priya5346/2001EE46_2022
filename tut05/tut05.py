@@ -83,3 +83,104 @@ def split_count(mod):
 
 
 split_count(mod)
+#names of octants
+possible_octant_names = ['Internal outward interaction',
+                    'External outward interaction',
+                    'External Ejection',
+                    'Internal Ejection',
+                    'External inward interaction',
+                    'Internal inward interaction',
+                    'Internal sweep',
+                    'External sweep'
+                    ]
+#function to find overall ranking and mod ranking
+def ranking():
+
+    overall_count = []
+    mod_count = np.zeros((no_of_ranges, 8))
+    mod_ranking = []
+    rank1 = []
+    row_num = 0
+    #storing overall and mod ranking
+    for i in range(8):
+        overall_count.append(df[str(possible_octant_values[i])][row_num])
+    row_num = row_num+2
+    for i in range(no_of_ranges):
+        for j in range(8):
+            mod_count[i][j] = df[str(possible_octant_values[j])][row_num]
+        mod_ranking.append(ss.rankdata(mod_count[i]))
+        row_num = row_num + 1
+
+    print(overall_count)
+    print(mod_count)
+    overall_ranking = ss.rankdata(overall_count)
+    print(overall_ranking)
+    print(mod_ranking)
+    #initialsing columns for ranking data frame
+    df['Rank 1'] = ''
+    df['Rank 1'][no_of_ranges+2] = '1'
+    df['Rank 2'] = ''
+    df['Rank 2'][no_of_ranges+2] = '-1'
+    df['Rank 3'] = ''
+    df['Rank 3'][no_of_ranges+2] = '2'
+    df['Rank 4'] = ''
+    df['Rank 4'][no_of_ranges+2] = '-2'
+    df['Rank 5'] = ''
+    df['Rank 5'][no_of_ranges+2] = '3'
+    df['Rank 6'] = ''
+    df['Rank 6'][no_of_ranges+2] = '-3'
+    df['Rank 7'] = ''
+    df['Rank 7'][no_of_ranges+2] = '4'
+    df['Rank 8'] = ''
+    df['Rank 8'][no_of_ranges+2] = '-4'
+
+    possible_ranks = ['Rank 1', 'Rank 2', 'Rank 3', 'Rank 4', 'Rank 5', 'Rank 6', 'Rank 7', 'Rank 8']
+
+    row_num = 0
+
+    #finding octants with rank 1 for overall range
+    for i in range(8):
+        df[possible_ranks[i]][row_num] = 9-int(overall_ranking[i])
+        if df[possible_ranks[i]][row_num]==1:
+            rank1.append(i)
+    row_num = row_num+2
+
+    #finding octants with rank 1 in each  mod range
+    for i in range(no_of_ranges):
+        for j in range(8):
+            df[possible_ranks[j]][row_num] = 9 - int(mod_ranking[i][j])
+            if df[possible_ranks[j]][row_num]==1:
+                rank1.append(j)
+        row_num = row_num + 1
+    #adding rank 1 from above into the data frame
+    df['Rank 1 Octant ID'] = ''
+    df['Rank 1 Octant name'] = ''
+
+    df['Rank 1 Octant ID'][0] = possible_octant_values[rank1[0]]
+    df['Rank 1 Octant name'][0] = possible_octant_names[rank1[0]]
+
+    row_num = 2
+
+    for i in range(no_of_ranges):
+        df['Rank 1 Octant ID'][row_num] = possible_octant_values[rank1[i+1]]
+        df['Rank 1 Octant name'][row_num] = possible_octant_names[rank1[i+1]]
+        row_num = row_num+1
+
+    row_num = row_num+3
+    #adding rank 1 mod values into the data frame
+    columns_to_use = ['1', '-1', '2']
+
+    df[columns_to_use[0]][row_num] = 'Octant ID'
+    df[columns_to_use[1]][row_num] = 'Octant Name'
+    df[columns_to_use[2]][row_num] = 'Rank 1 Mod Values'
+    row_num = row_num+1
+
+    for i in range(8):
+        df[columns_to_use[0]][row_num] = possible_octant_values[i]
+        df[columns_to_use[1]][row_num] = possible_octant_names[i]
+        df[columns_to_use[2]][row_num] = rank1[1:no_of_ranges+1].count(i)
+        row_num = row_num+1
+
+
+
+ranking()
