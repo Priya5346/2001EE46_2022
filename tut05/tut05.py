@@ -52,4 +52,34 @@ def octant_identification_count(df):
 
 octants_overall = octant_identification_count(df)[0]
 df['Octants'] = octants_overall
-print(df)
+
+mod = 5000
+no_of_ranges = int(30000/mod)
+possible_octant_values = [1, -1, 2, -2, 3, -3, 4, -4]
+
+def split_count(mod):
+    df['Octant ID'] = ''
+    df['Octant ID'][0] = 'Overall Count'
+    df['Octant ID'][2] = '0 - ' + str(mod-1)
+    for i in range (no_of_ranges-1):
+        df['Octant ID'][i+3] = str((i+1)*mod) +' - '+ str((i+2)*mod-1)
+
+    # adding overall octant count
+    for i in possible_octant_values:
+        df[str(i)] = ''
+    for i in possible_octant_values:
+        df[str(i)][0] = df['Octants'].value_counts()[i]
+    print(df['Octants'].value_counts())
+    # adding mod octant count
+    c = 0
+    while(c<30000):
+        #creating ranges using the mod value
+        for i in range (no_of_ranges):
+            print(df['Octants'][c:c+mod])
+            for j in possible_octant_values:
+                df[str(j)][i+2] = df['Octants'][c:c+mod].value_counts()[j]
+            c = c + mod
+
+
+
+split_count(mod)
