@@ -69,13 +69,13 @@ def split_count(mod):
         df[str(i)] = ''
     for i in possible_octant_values:
         df[str(i)][0] = df['Octants'].value_counts()[i]
-    print(df['Octants'].value_counts())
+    
     # adding mod octant count
     c = 0
     while(c<30000):
         #creating ranges using the mod value
         for i in range (no_of_ranges):
-            print(df['Octants'][c:c+mod])
+            
             for j in possible_octant_values:
                 df[str(j)][i+2] = df['Octants'][c:c+mod].value_counts()[j]
             c = c + mod
@@ -111,11 +111,9 @@ def ranking():
         mod_ranking.append(ss.rankdata(mod_count[i]))
         row_num = row_num + 1
 
-    print(overall_count)
-    print(mod_count)
+    
     overall_ranking = ss.rankdata(overall_count)
-    print(overall_ranking)
-    print(mod_ranking)
+    
     #initialsing columns for ranking data frame
     df['Rank 1'] = ''
     df['Rank 1'][no_of_ranges+2] = '1'
@@ -184,3 +182,6 @@ def ranking():
 
 
 ranking()
+
+#converting data frame into excel file
+df.to_excel('my_output.xlsx')
