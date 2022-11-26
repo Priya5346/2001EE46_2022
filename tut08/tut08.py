@@ -385,3 +385,4 @@ sheet["E27"] = " "+str(ind_total_score) +" - " + str(ind_fall_of_wickets)
 sheet["F27"] = str(over_ind)
 Eone=" "+str(pak_total_score) +" - " + str(pak_fall_of_wickets)
 Fone = str(over_pak)
+
