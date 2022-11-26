@@ -32,3 +32,21 @@ for i in lst_pak:
 print(lst_ind)
 print(lst_pak)
 
+wb = openpyxl.Workbook()
+sheet = wb.active
+
+# batting [runs,ball,4s,6s,sr]
+# bowling [over,medan,runs,Wickets, NB, WD, ECO]
+ind_fall_of_wickets=0
+pak_fall_of_wickets=0
+out_pak_bat={}
+out_ind_bat={}
+ind_bowlers={}
+pak_bowlers={}
+ind_bats={}
+pak_bats={}
+pak_bowlers_total=0
+ind_bowlers_total=0
+pak_byes=0
+ind_byes=0
+
