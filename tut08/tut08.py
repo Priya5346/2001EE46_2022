@@ -386,3 +386,14 @@ sheet["F27"] = str(over_ind)
 Eone=" "+str(pak_total_score) +" - " + str(pak_fall_of_wickets)
 Fone = str(over_pak)
 
+print(wb)
+wb.save("Scoreboard.xlsx")
+
+df = pd.read_excel('Scoreboard.xlsx')
+
+df = df.set_axis(['PAKISTAN', ' INNINGS'] + [" "," ",Eone,Fone," "," "," "], axis='columns')
+
+df.to_csv('Scorecard.csv',index=False)
+
+os.path.exists("Scoreboard.xlsx") 
+os.remove("Scoreboard.xlsx")
